@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "tictactoe"
+version = "0.1.0"
+description = "Tic Tac Toe game"
+authors = ["Jan Kaleta <kaletajan57@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.1.0"
+black = "^23.9.1"
+pytest = "^7.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
