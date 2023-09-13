@@ -1,15 +1,10 @@
-import classes.board
+import classes.game as g
 
 
 def main() -> None:
     print("Hello World!")
-    board = classes.board.Board()
-    board.insert_sign("X", 2, 0)
-    board.insert_sign("O", 0, 1)
-    board.insert_sign("X", 2, 1)
-    board.insert_sign("O", 0, 0)
-    board.insert_sign("X", 2, 2)
-    board.show_board()
+    game = g.Game()
+    game.prepare_game()
 
 
 if __name__ == "__main__":

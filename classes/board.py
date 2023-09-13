@@ -1,20 +1,20 @@
 class Board:
     def __init__(self) -> None:
-        self.__board = [["", "", ""], ["", "", ""], ["", "", ""]] #board
-        self.__empty_spaces = 9 #empty spaces left on a board
+        self.__board = [["", "", ""], ["", "", ""], ["", "", ""]]
+        self.__emptySpaces = 9
 
     # Resets board to default state
     def reset_board(self) -> None:
         self.__board = [["", "", ""], ["", "", ""], ["", "", ""]]
-        self.__empty_spaces = 9
+        self.__emptySpaces = 9
 
     # Inserts to board X or O - basic move in the game
     def insert_sign(self, sign: str, row: int, column: int) -> None:
         if self.__board[row][column] == "":
             self.__board[row][column] = sign
-            self.__empty_spaces -= 1
-        
-        if self.__empty_spaces <= 4:
+            self.__emptySpaces -= 1
+
+        if self.__emptySpaces <= 4:
             if self.check_win(sign):
                 print(f'Gratulacje! Grę zwycięża {sign}!')
 
