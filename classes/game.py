@@ -13,6 +13,7 @@ class Game:
         self.__howManyToWin = 0
         self.__board = Board()
 
+    #Method prepares the game setup. Currently the game is going in console. The future plans include GUI client, so this method is only a temporary placeholder
     def prepare_game(self) -> None:
         self.__set_player_one_name(input("Welcome to Tic Tac Toe! Please enter first player name: \n"))
         self.__set_player_two_name(input("Please enter the second player name: \n"))
@@ -29,11 +30,14 @@ class Game:
                     print("Wrong entry! Please enter integer number that is higher than 0.\n")
         print(f'Let\'s start the game between {self.__playerOne} and {self.__playerTwo}! The first one to score {self.__howManyToWin} points wins!\n')
 
+    #Setter for __playerOne
     def __set_player_one_name(self, name: str) -> None:
         self.__playerOne = name
 
+    #Setter for __playerTwo
     def __set_player_two_name(self, name: str) -> None:
         self.__playerTwo = name
 
+    #Setter for __howManyToWin
     def __set_how_many_to_win(self, number: int):
         self.__howManyToWin = number
