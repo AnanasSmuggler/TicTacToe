@@ -28,8 +28,18 @@ class Game:
         while True:
             inp = input("Are you ready? [y/n]: \n")
             if inp.lower() == 'y':
-                self.__start_game()
+                self.__gameplay()
             break
+
+    def __gameplay(self) -> None:
+        while True:
+            if self.__players[0]["points"] >= self.__howManyToWin or self.__players[1]["points"] >= self.__howManyToWin:
+                print(f'End of the match! The score is: {self.__players[0]["name"]} {self.__players[0]["points"]} - {self.__players[1]["name"]} {self.__players[1]["points"]}')
+                break
+            else:
+                print(f'The score is: {self.__players[0]["name"]} {self.__players[0]["points"]} - {self.__players[1]["name"]} {self.__players[1]["points"]}')
+                self.__start_game()
+                self.__players[0], self.__players[1] = self.__players[1], self.__players[0]
 
     # Starts the single round of Tic Tac Toe
     def __start_game(self) -> None:
@@ -46,6 +56,10 @@ class Game:
                 i += 1
             else:
                 print("Wrong move! Try again!")
+        if i == 9:
+            print("Draw!")
+            self.__draw()
+        self.__board.reset_board()
 
     # Setter for __playerOne
     def __set_player_one_name(self, name: str) -> None:
@@ -59,7 +73,7 @@ class Game:
     def __set_how_many_to_win(self, number: int) -> None:
         self.__howManyToWin = number
 
-    # Adding one point to the winner of round     
+    # Adding one point to the winner of round
     def __add_points(self, index: int) -> None:
         self.__players[index]["points"] += 1
 
