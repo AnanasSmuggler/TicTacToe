@@ -5,10 +5,7 @@ import sys
 
 class Game:
     def __init__(self) -> None:
-        self.__players = ["", ""]
-        self.__signs = ["O", "X"]
-        self.__playerOnePoints = 0
-        self.__playerTwoPoints = 0
+        self.__players = [{"name": "", "sign": "O", "points": 0}, {"name": "", "sign": "X", "points": 0}]
         self.__howManyToWin = 0
         self.__board = Board()
 
@@ -27,32 +24,46 @@ class Game:
                     break
                 else:
                     print("Wrong entry! Please enter integer number that is higher than 0.\n")
-        print(f'Let\'s start the game between {self.__playerOne} and {self.__playerTwo}! The first one to score {self.__howManyToWin} points wins!\n')
+        print(f'Let\'s start the game between {self.__players[0]["name"]} and {self.__players[1]["name"]}! The first one to score {self.__howManyToWin} points wins!\n')
         while True:
             inp = input("Are you ready? [y/n]: \n")
             if inp.lower() == 'y':
                 self.__start_game()
             break
 
+    # Starts the single round of Tic Tac Toe
     def __start_game(self) -> None:
         i = 0
         self.__board.show_board()
         while i < 9:
-            move = input(f'{self.__players[0]}, what\'s your next move?\n')
-            if regex.match(r'^[012]{2}$', move) and self.__board.insert_sign(self.__signs[i % 2], int(move[0]), int(move[1])):
+            move = input(f'{self.__players[i % 2]["name"]}, what\'s your next move?\n')
+            if regex.match(r'^[012]{2}$', move) and self.__board.insert_sign(self.__players[i % 2]["sign"], int(move[0]), int(move[1])):
                 self.__board.show_board()
+                if self.__board.check_win(self.__players[i % 2]["sign"]):
+                    print(f'{self.__players[i % 2]["name"]} has won this round!')
+                    self.__add_points(i % 2)
+                    break
                 i += 1
             else:
                 print("Wrong move! Try again!")
 
     # Setter for __playerOne
     def __set_player_one_name(self, name: str) -> None:
-        self.__players[0] = name
+        self.__players[0]["name"] = name
 
     # Setter for __playerTwo
     def __set_player_two_name(self, name: str) -> None:
-        self.__players[1] = name
+        self.__players[1]["name"] = name
 
     # Setter for __howManyToWin
-    def __set_how_many_to_win(self, number: int):
+    def __set_how_many_to_win(self, number: int) -> None:
         self.__howManyToWin = number
+
+    # Adding one point to the winner of round     
+    def __add_points(self, index: int) -> None:
+        self.__players[index]["points"] += 1
+
+    # Adding half point for both players in case of a draw
+    def __draw(self) -> None:
+        self.__players[0]["points"] += 0.5
+        self.__players[1]["points"] += 0.5
