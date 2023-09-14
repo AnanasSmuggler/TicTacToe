@@ -5,15 +5,14 @@ import sys
 
 class Game:
     def __init__(self) -> None:
-        self.__playerOne = ""
-        self.__playerTwo = ""
+        self.__players = ["", ""]
         self.__signs = ["O", "X"]
         self.__playerOnePoints = 0
         self.__playerTwoPoints = 0
         self.__howManyToWin = 0
         self.__board = Board()
 
-    #Method prepares the game setup. Currently the game is going in console. The future plans include GUI client, so this method is only a temporary placeholder
+    # Method prepares the game setup. Currently the game is going in console. The future plans include GUI client, so this method is only a temporary placeholder
     def prepare_game(self) -> None:
         self.__set_player_one_name(input("Welcome to Tic Tac Toe! Please enter first player name: \n"))
         self.__set_player_two_name(input("Please enter the second player name: \n"))
@@ -29,15 +28,31 @@ class Game:
                 else:
                     print("Wrong entry! Please enter integer number that is higher than 0.\n")
         print(f'Let\'s start the game between {self.__playerOne} and {self.__playerTwo}! The first one to score {self.__howManyToWin} points wins!\n')
+        while True:
+            inp = input("Are you ready? [y/n]: \n")
+            if inp.lower() == 'y':
+                self.__start_game()
+            break
 
-    #Setter for __playerOne
+    def __start_game(self) -> None:
+        i = 0
+        self.__board.show_board()
+        while i < 9:
+            move = input(f'{self.__players[0]}, what\'s your next move?\n')
+            if regex.match(r'^[012]{2}$', move) and self.__board.insert_sign(self.__signs[i % 2], int(move[0]), int(move[1])):
+                self.__board.show_board()
+                i += 1
+            else:
+                print("Wrong move! Try again!")
+
+    # Setter for __playerOne
     def __set_player_one_name(self, name: str) -> None:
-        self.__playerOne = name
+        self.__players[0] = name
 
-    #Setter for __playerTwo
+    # Setter for __playerTwo
     def __set_player_two_name(self, name: str) -> None:
-        self.__playerTwo = name
+        self.__players[1] = name
 
-    #Setter for __howManyToWin
+    # Setter for __howManyToWin
     def __set_how_many_to_win(self, number: int):
         self.__howManyToWin = number
