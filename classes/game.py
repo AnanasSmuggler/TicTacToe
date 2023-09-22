@@ -1,5 +1,5 @@
 from .board import Board
-import regex
+import re
 import sys
 
 
@@ -19,7 +19,7 @@ class Game:
             if userInput.lower() == 'q':
                 sys.exit()
             else:
-                if regex.match(r'^[1-9]\d*$', userInput):
+                if re.match(r'^[1-9]\d*$', userInput):
                     self.__set_how_many_to_win(int(userInput))
                     break
                 else:
@@ -31,6 +31,7 @@ class Game:
                 self.__gameplay()
             break
 
+    # Handles whole gameplay
     def __gameplay(self) -> None:
         while True:
             if self.__players[0]["points"] >= self.__howManyToWin or self.__players[1]["points"] >= self.__howManyToWin:
@@ -47,7 +48,7 @@ class Game:
         self.__board.show_board()
         while i < 9:
             move = input(f'{self.__players[i % 2]["name"]}, what\'s your next move?\n')
-            if regex.match(r'^[012]{2}$', move) and self.__board.insert_sign(self.__players[i % 2]["sign"], int(move[0]), int(move[1])):
+            if re.match(r'^[012]{2}$', move) and self.__board.insert_sign(self.__players[i % 2]["sign"], int(move[0]), int(move[1])):
                 self.__board.show_board()
                 if self.__board.check_win(self.__players[i % 2]["sign"]):
                     print(f'{self.__players[i % 2]["name"]} has won this round!')
