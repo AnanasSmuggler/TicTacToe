@@ -70,6 +70,34 @@ files = [
 ]
 
 [[package]]
+name = "customtkinter"
+version = "5.2.0"
+description = "Create modern looking GUIs with Python"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "customtkinter-5.2.0-py3-none-any.whl", hash = "sha256:f8b2db189959033539884d7faff99ebbb654c18097d761ed844180e32f0b5929"},
+    {file = "customtkinter-5.2.0.tar.gz", hash = "sha256:e93448a8d22121e20ec16e95960a8306e17cf7e0079766f5804b2e855e614937"},
+]
+
+[package.dependencies]
+darkdetect = "*"
+
+[[package]]
+name = "darkdetect"
+version = "0.8.0"
+description = "Detect OS Dark Mode from Python"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "darkdetect-0.8.0-py3-none-any.whl", hash = "sha256:a7509ccf517eaad92b31c214f593dbcf138ea8a43b2935406bbd565e15527a85"},
+    {file = "darkdetect-0.8.0.tar.gz", hash = "sha256:b5428e1170263eb5dea44c25dc3895edd75e6f52300986353cd63533fe7df8b1"},
+]
+
+[package.extras]
+macos-listener = ["pyobjc-framework-Cocoa"]
+
+[[package]]
 name = "flake8"
 version = "6.1.0"
 description = "the modular source code checker: pep8 pyflakes and co"
@@ -312,4 +340,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "e61a4d469c03362cc5efb232632f9cb9d7817ae7449b1790dcea2a4e39795fa7"
+content-hash = "4a3c367fbbbd7fde571b1b50884f5cf30f94a3a21755a14ec2d13d6ffe52dd73"
