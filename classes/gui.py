@@ -1,5 +1,6 @@
 import customtkinter as ctk
 import sys
+import re
 from CTkMessagebox import CTkMessagebox
 
 class GUI:
@@ -7,6 +8,9 @@ class GUI:
         self.root = root
         self.root.title("Tic Tac Toe")
         self.root.geometry("400x400")
+        self.board = [[None, None, None],
+                      [None, None, None],
+                      [None, None, None]]
         self.create_menu()
         
     def create_menu(self) -> None:
@@ -60,14 +64,35 @@ class GUI:
         sName = self.textInputNameS.get()
         rounds = self.textInputRounds.get()
         if fName.strip() and sName.strip() and rounds.strip():
-            self.clear_content()
-            print(f'{fName} vs {sName} | {rounds}')
+            if not re.match(r'^[1-9]\d*$', rounds):
+                self.show_error("The rounds input is not a number!")
+            else:
+                self.clear_content()
+                self.create_board()
         else:
-            CTkMessagebox(title="Error", message="Wrong input data!!!", icon="cancel")
+            self.show_error("Empty inputs!")
+
+    def create_board(self) -> None:
+        for i in range(3):
+            for j in range(3):
+                frame = ctk.CTkFrame(self.root)
+                frame.grid(row = i, column = j)
+                
+                label = ctk.CTkLabel(frame, text="")
+                label.pack(expand=True)
+                
+                self.board[i][j] = ctk.CTkButton(label, text="", width=70, height=70, command=lambda row=i, col=j: self.make_move(row, col))
+                self.board[i][j].pack(expand=True, fill=ctk.BOTH)
+
+    def make_move(self, row: int, col: int) -> None:
+        print(f'{row} | {col}')
 
     def back_button_click(self) -> None:
         self.clear_content()
         self.create_menu()
+
+    def show_error(self, msg: str) -> None:
+        CTkMessagebox(title="Error", message=msg, icon="cancel")
 
     def exit_button_click(self) -> None:
         sys.exit(1)
