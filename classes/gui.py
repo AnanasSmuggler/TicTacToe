@@ -1,4 +1,5 @@
 import customtkinter as ctk
+import classes.game as g
 import sys
 import re
 from CTkMessagebox import CTkMessagebox
@@ -11,6 +12,7 @@ class GUI:
         self.board = [[None, None, None],
                       [None, None, None],
                       [None, None, None]]
+        self.gameHandler = g.Game()
         self.create_menu()
         
     def create_menu(self) -> None:
@@ -73,19 +75,15 @@ class GUI:
             self.show_error("Empty inputs!")
 
     def create_board(self) -> None:
+        self.frame = ctk.CTkFrame(master = self.root)
+        self.frame.grid(row=0, column=0, ipadx=20, ipady=20, padx=20, pady=20, sticky="nsew")
         for i in range(3):
-            for j in range(3):
-                frame = ctk.CTkFrame(self.root)
-                frame.grid(row = i, column = j)
-                
-                label = ctk.CTkLabel(frame, text="")
-                label.pack(expand=True)
-                
-                self.board[i][j] = ctk.CTkButton(label, text="", width=70, height=70, command=lambda row=i, col=j: self.make_move(row, col))
-                self.board[i][j].pack(expand=True, fill=ctk.BOTH)
+            for j in range(3):               
+                self.board[i][j] = ctk.CTkButton(self.frame, text="", width=70, height=70, command=lambda row=i, col=j: self.make_move(row, col))
+                self.board[i][j].grid(row=i, column = j)
 
     def make_move(self, row: int, col: int) -> None:
-        print(f'{row} | {col}')
+        self.board[row][col].configure(text="X", font=("Helvetica", 45))
 
     def back_button_click(self) -> None:
         self.clear_content()
