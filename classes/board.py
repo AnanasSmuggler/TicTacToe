@@ -17,6 +17,9 @@ class Board:
 
         return False
 
+    def getEmptySpaces(self) -> int:
+        return self.__emptySpaces
+
     # Prints board state in console
     def show_board(self) -> None:
         print(self.__board[0])
