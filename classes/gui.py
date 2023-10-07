@@ -33,25 +33,25 @@ class GUI:
         self.labelNameF.pack()
 
         self.textInputNameF = ctk.CTkEntry(self.root)
-        self.textInputNameF.pack(pady=10)
+        self.textInputNameF.pack()
         
         self.labelNameS = ctk.CTkLabel(self.root, text="Second Player:")
         self.labelNameS.pack()
 
         self.textInputNameS = ctk.CTkEntry(self.root)
-        self.textInputNameS.pack(pady=10)
+        self.textInputNameS.pack()
         
         self.labelRounds = ctk.CTkLabel(self.root, text="How many rounds to win:")
         self.labelRounds.pack()
 
         self.textInputRounds = ctk.CTkEntry(self.root)
-        self.textInputRounds.pack(pady=10)
+        self.textInputRounds.pack()
         
         self.submitButton = ctk.CTkButton(self.root, text="START GAME", command=self.start_button_click)
-        self.submitButton.pack(pady=5)
+        self.submitButton.pack(pady=15)
         
         self.backButton = ctk.CTkButton(self.root, text="GO BACK", command=self.back_button_click)
-        self.backButton.pack(pady=5)
+        self.backButton.pack(pady=15)
     
     def clear_content(self) -> None:
         for widget in self.root.winfo_children():
@@ -76,14 +76,14 @@ class GUI:
 
     def create_board(self) -> None:
         self.frame = ctk.CTkFrame(master = self.root)
-        self.frame.grid(row=0, column=0, ipadx=20, ipady=20, padx=20, pady=20, sticky="nsew")
+        self.frame.place(relx=0.5, rely=0.5, anchor=ctk.CENTER)
         for i in range(3):
             for j in range(3):               
-                self.board[i][j] = ctk.CTkButton(self.frame, text="", width=70, height=70, command=lambda row=i, col=j: self.make_move(row, col))
-                self.board[i][j].grid(row=i, column = j)
+                self.board[i][j] = ctk.CTkButton(self.frame, text="", width=80, height=80, command=lambda row=i, col=j: self.make_move(row, col))
+                self.board[i][j].grid(row=i, column = j, padx=(15,15), pady=(15,15))
 
     def make_move(self, row: int, col: int) -> None:
-        self.board[row][col].configure(text="X", font=("Helvetica", 45))
+        self.board[row][col].configure(text="O", font=("Helvetica", 45))
 
     def back_button_click(self) -> None:
         self.clear_content()
