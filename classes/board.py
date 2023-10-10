@@ -17,6 +17,7 @@ class Board:
 
         return False
 
+    # Getter for empty spaces
     def getEmptySpaces(self) -> int:
         return self.__emptySpaces
 

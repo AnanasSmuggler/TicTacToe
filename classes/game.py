@@ -13,12 +13,19 @@ class Game:
         self.__set_player_two_name(player2)
         self.__set_how_many_to_win(rounds)
 
+    # Returns string with the names, signs and points of players used in gui board
     def get_player_status(self, index: int) -> str:
         return f'[{self.__players[index]["sign"]}] {self.__players[index]["name"]} {self.__players[index]["points"]}' if index == 0 else f'{self.__players[index]["points"]} {self.__players[index]["name"]} [{self.__players[index]["sign"]}]'
 
     # Getter for current players move
     def get_player_on_move(self, emptySpaces: int) -> str:
         return self.__players[emptySpaces % 2]["sign"]
+    
+    def get_player_name_by_sign(self, sign: str) -> str:
+        for player in self.__players:
+            if player["sign"] == sign:
+                return player["name"]
+        return ""
     
     # Setter for __playerOne
     def __set_player_one_name(self, name: str) -> None:
@@ -32,11 +39,16 @@ class Game:
     def __set_how_many_to_win(self, number: int) -> None:
         self.__howManyToWin = number
 
-    # Adding one point to the winner of round
-    def __add_points(self, index: int) -> None:
-        self.__players[index]["points"] += 1
-
+    # Method adds point for player that won round and returns if the player has won the whole game
+    def round_won(self, sign: str) -> bool:
+        for player in self.__players:
+            if player["sign"] == sign:
+                player["points"] +=1
+                if player["points"] <= self.__howManyToWin:
+                    return True
+        return False
+    
     # Adding half point for both players in case of a draw
-    def __draw(self) -> None:
+    def draw(self) -> None:
         self.__players[0]["points"] += 0.5
         self.__players[1]["points"] += 0.5

@@ -9,7 +9,7 @@ class GUI:
     def __init__(self, root) -> None:
         self.root = root
         self.root.title("Tic Tac Toe")
-        self.root.geometry("400x500")
+        self.root.geometry("450x550")
         self.buttons = [[None, None, None],
                       [None, None, None],
                       [None, None, None]]
@@ -87,7 +87,7 @@ class GUI:
     def create_board(self) -> None:
         self.gameBoard.reset_board()
         
-        self.scoreFrame = ctk.CTkFrame(master = self.root,  width=380, height=40)
+        self.scoreFrame = ctk.CTkFrame(master = self.root,  width=430, height=40)
         self.scoreFrame.grid(row=0, column=0, sticky="ew", pady=15)
         self.scoreFrame.place(relx=0.5, rely=0.1, anchor=ctk.CENTER)
         
@@ -109,7 +109,27 @@ class GUI:
         sign = self.gameHandler.get_player_on_move(self.gameBoard.getEmptySpaces())
         if self.gameBoard.insert_sign(sign, row, col):
             self.buttons[row][col].configure(text=sign, font=("Helvetica", 45))
-            
+            if self.gameBoard.getEmptySpaces() < 5:
+                if  self.gameBoard.check_win(sign):
+                    if self.gameHandler.round_won(sign):
+                        self.clear_content()
+                        self.create_menu()
+                        self.show_checkmark(f'Game Over! The score is:\n {self.gameHandler.get_player_status(0)} - {self.gameHandler.get_player_status(1)}', "GG")
+                    else:
+                        self.clear_content()
+                        self.create_board()
+                        self.show_checkmark(f'The winner of this round is {self.gameHandler.get_player_name_by_sign(sign)}!', "Go Next")
+                else:
+                    if self.gameBoard.getEmptySpaces() == 0:
+                        self.gameHandler.draw()
+                        self.reset_gui_board()
+                        self.show_checkmark(f'Draw!', "Go Next")
+    
+    # Resets the game board
+    def reset_gui_board(self) -> None:
+        self.clear_content()
+        self.create_board()
+    
     # Event that happens after clicking "GO BACK" button in the play menu. Clears the window and creates first menu
     def back_button_click(self) -> None:
         self.clear_content()
