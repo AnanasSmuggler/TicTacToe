@@ -110,20 +110,23 @@ class GUI:
         if self.gameBoard.insert_sign(sign, row, col):
             self.buttons[row][col].configure(text=sign, font=("Helvetica", 45))
             if self.gameBoard.getEmptySpaces() < 5:
-                if  self.gameBoard.check_win(sign):
-                    if self.gameHandler.round_won(sign):
-                        self.clear_content()
-                        self.create_menu()
-                        self.show_checkmark(f'Game Over! The score is:\n {self.gameHandler.get_player_status(0)} - {self.gameHandler.get_player_status(1)}', "GG")
-                    else:
-                        self.clear_content()
-                        self.create_board()
-                        self.show_checkmark(f'The winner of this round is {self.gameHandler.get_player_name_by_sign(sign)}!', "Go Next")
+                if self.gameBoard.check_win(sign):
+                    self.gameHandler.round_won(sign)
+                    self.handle_round_end(f'The winner of this round is {self.gameHandler.get_player_name_by_sign(sign)}!')
                 else:
                     if self.gameBoard.getEmptySpaces() == 0:
                         self.gameHandler.draw()
-                        self.reset_gui_board()
-                        self.show_checkmark(f'Draw!', "Go Next")
+                        self.handle_round_end("Draw!")
+                
+
+    def handle_round_end(self, msg: str) -> None:
+        if self.gameHandler.is_game_over():
+            self.clear_content()
+            self.create_menu()
+            self.show_checkmark(f'Game Over! The score is:\n {self.gameHandler.get_player_status(0)} - {self.gameHandler.get_player_status(1)}', "GG")
+        else:
+            self.reset_gui_board()
+            self.show_checkmark(msg, "Go Next")
     
     # Resets the game board
     def reset_gui_board(self) -> None:

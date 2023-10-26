@@ -9,9 +9,14 @@ class Game:
 
     # Method prepares the game setup. Currently the game is going in console. The future plans include GUI client, so this method is only a temporary placeholder
     def prepare_game(self, player1: str, player2: str, rounds: int) -> None:
+        self.__reset_players()
         self.__set_player_one_name(player1)
         self.__set_player_two_name(player2)
         self.__set_how_many_to_win(rounds)
+
+    # Resets state of players
+    def __reset_players(self) -> None:
+        self.__players = [{"name": "", "sign": "O", "points": 0}, {"name": "", "sign": "X", "points": 0}]
 
     # Returns string with the names, signs and points of players used in gui board
     def get_player_status(self, index: int) -> str:
@@ -39,16 +44,18 @@ class Game:
     def __set_how_many_to_win(self, number: int) -> None:
         self.__howManyToWin = number
 
-    # Method adds point for player that won round and returns if the player has won the whole game
+    # Method adds point for player that won round
     def round_won(self, sign: str) -> bool:
         for player in self.__players:
             if player["sign"] == sign:
                 player["points"] +=1
-                if player["points"] <= self.__howManyToWin:
-                    return True
-        return False
-    
-    # Adding half point for both players in case of a draw
+                
+    # Method adds half point for both players in case of a draw
     def draw(self) -> None:
         self.__players[0]["points"] += 0.5
         self.__players[1]["points"] += 0.5
+
+    # Method that checks if someone won the game 
+    def is_game_over(self) -> bool:
+        return self.__players[0]["points"] >= self.__howManyToWin or self.__players[1]["points"] >= self.__howManyToWin
+    
