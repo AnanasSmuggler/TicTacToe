@@ -49,12 +49,18 @@ class Game:
         for player in self.__players:
             if player["sign"] == sign:
                 player["points"] +=1
+        self.__switch_players()
                 
     # Method adds half point for both players in case of a draw
     def draw(self) -> None:
         self.__players[0]["points"] += 0.5
         self.__players[1]["points"] += 0.5
+        self.__switch_players()
 
+    # Method switches players dict in lists. The purpose of this method is to switch player that will start the round
+    def __switch_players(self) -> None:
+        self.__players[0], self.__players[1] = self.__players[1], self.__players[0]
+        
     # Method that checks if someone won the game 
     def is_game_over(self) -> bool:
         return self.__players[0]["points"] >= self.__howManyToWin or self.__players[1]["points"] >= self.__howManyToWin
